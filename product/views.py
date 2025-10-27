@@ -13,3 +13,4 @@ def json_example(request):
 
 def home(request):
     return HttpResponse("hey this is home page")
+
