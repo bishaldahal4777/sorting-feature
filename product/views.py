@@ -14,3 +14,8 @@ def json_example(request):
 def home(request):
     return HttpResponse("hey this is home page")
 
+def form_view(request):
+    name = None
+    if request.method == 'POST':
+        name = request.POST.get('username')
+    return render(request, 'form.html', {'name':name})
