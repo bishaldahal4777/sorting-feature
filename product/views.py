@@ -39,5 +39,7 @@ def contact_view(request):
         message = request.POST.get("message")
 
         if not name or not message:
-            print('fill out the form first')
+            error='fill out the form first'
+        else:
+            pass
     return render(request, 'product/contact.html', {'name': name, 'message':message, 'error':error})
