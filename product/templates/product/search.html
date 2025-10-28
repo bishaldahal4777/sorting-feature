@@ -1,1 +1,10 @@
 <h2>Search Page</h2>
+<form action="" method="get">
+    <input type="text" name="q" value="{{query}}" placeholder="Search....">
+    <button type="submit">Search</button>
+
+</form>
+
+{% if query %}
+<p>you have searched for {{query}}</p>
+{% endif %}
