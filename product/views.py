@@ -35,11 +35,18 @@ def contact_view(request):
     message=''
     error=''
     if request.method=='POST':
-        name = request.POST.get("name")
-        message = request.POST.get("message")
+        action = request.POST.get('action')
 
-        if not name or not message:
-            error='fill out the form first'
-        else:
-            pass
+        if action == 'submit':
+            name = request.POST.get("name")
+            message = request.POST.get("message")
+
+            if not name or not message:
+                error='fill out the form first'
+        elif action=='clear':
+            name=''
+            message=''
+            error=''
+    
+        
     return render(request, 'product/contact.html', {'name': name, 'message':message, 'error':error})

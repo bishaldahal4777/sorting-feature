@@ -2,8 +2,9 @@
 <form action="" method="post">
     {% csrf_token %}
     <input type="text" name="name" placeholder="Enter name">
-    <input type="textarea" name="message" placeholder="message....">
-    <button type="submit">Submit</button>
+    <textarea name="message" placeholder="message....">
+    <button type="submit" name="action" value="submit">Submit</button>
+    <button type="submit" name="action" value="clear">Clear</button>
 </form>
 
 {% if error %}
