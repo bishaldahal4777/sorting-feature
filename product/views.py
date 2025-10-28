@@ -28,4 +28,16 @@ def feedback_view(request):
     feedback_text = ''
     if request.method == 'POST':
         feedback_text = request.POST.get('feedback')
-    return render(request, 'feedback.html',{'feedback':feedback_text})
+    return render(request, 'product/feedback.html',{'feedback':feedback_text})
+
+def contact_view(request):
+    name=''
+    message=''
+    error=''
+    if request.method=='POST':
+        name = request.POST.get("name")
+        message = request.POST.get("message")
+
+        if not name or not message:
+            print('fill out the form first')
+    return render(request, 'product/contact.html', {'name': name, 'message':message, 'error':error})

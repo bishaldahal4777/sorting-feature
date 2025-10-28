@@ -1,5 +1,6 @@
 <h2>Share Your Feedback</h2>
-<form action="" method="post">
+<form action="" method="POST">
+    {% csrf_token %}
     <textarea name="feedback" id="" placeholder="your thoughts..." required></textarea>
     <button type="submit">Send FeedBack</button>
 </form>
