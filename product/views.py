@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Product, Feedback
 from django.http import JsonResponse, HttpResponse
+from django.contrib import messages
 
 def product(request):
     context = {'title': 'Home Page', 'username':'Bishal dahal', 'developer': 'Bishal Dev', 'skills':['python', 'git', 'sql']}
@@ -64,20 +65,17 @@ def feedback_manager(request):
             message=request.POST.get('message')
 
             if not name or not message:
-                message.error(request, "Please Fill out the form first")
+                messages.error(request, "Please Fill out the form first")
             else:
                 Feedback.objects.create(name=name, message=message)
-                message.success(request, "Successfully added new name and message")
+                messages.success(request, "Successfully added new name and message")
                 return redirect('feedback')
 
         elif action == 'clear':
             Feedback.objects.all().delete()
-            message.success(request, "succefully cleared all data")
+            messages.success(request, "succefully cleared all data")
             return redirect('feedback')
 
 
-    context={
-        'error':error,
-        'feedbacks':feedbacks
-    }
-    return render(request, 'product/feedback_manager.html',context)
+   
+    return render(request, 'product/feedback_manager.html',{'error':error})

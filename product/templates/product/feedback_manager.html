@@ -1,3 +1,12 @@
+
+{% if messages %}
+<ul>
+{% for message in messages %}
+
+{{message}}
+{%endfor%}
+</ul>
+{%endif%}
 <h2>Feedback Manager</h2>
 
 <form method="POST">
