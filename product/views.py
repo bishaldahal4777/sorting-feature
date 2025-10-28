@@ -64,13 +64,18 @@ def feedback_manager(request):
             message=request.POST.get('message')
 
             if not name or not message:
-                error = "Enter both fields first"
+                message.error(request, "Please Fill out the form first")
             else:
                 Feedback.objects.create(name=name, message=message)
+                message.success(request, "Successfully added new name and message")
+                return redirect('feedback')
+
         elif action == 'clear':
             Feedback.objects.all().delete()
+            message.success(request, "succefully cleared all data")
+            return redirect('feedback')
 
-        return redirect('feedback')
+
     context={
         'error':error,
         'feedbacks':feedbacks
