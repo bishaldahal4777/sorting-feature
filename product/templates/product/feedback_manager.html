@@ -21,8 +21,8 @@
     {% for feedback in feedbacks %}
 
    <li>
-    <strong>{{ fb.name }}</strong>: {{ fb.message }}
-        <br><small>{{ fb.created_at }}</small>
+    <strong>{{ feedback.name }}</strong>: {{ feedback.message }}
+        <br><small>{{ feedback.created_at }}</small>
    </li>
    {% endfor %}
 </ul>

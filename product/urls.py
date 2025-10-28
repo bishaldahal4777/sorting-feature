@@ -7,8 +7,10 @@ urlpatterns = [
     path('home/', views.home, name= 'home'),
     path('form/', views.form_view, name= 'form'),
     path('search/', views.search_view, name= 'search'),
-    path('feedback/', views.feedback_view, name= 'feedback'),
+
     path('contact/', views.contact_view, name= 'contact'),
+    path('feedback/', views.feedback_manager, name= 'feedback'),
+
 
 
 
