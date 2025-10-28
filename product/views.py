@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .models import Product
+from django.shortcuts import render, redirect
+from .models import Product, Feedback
 from django.http import JsonResponse, HttpResponse
 
 def product(request):
@@ -50,3 +50,29 @@ def contact_view(request):
     
         
     return render(request, 'product/contact.html', {'name': name, 'message':message, 'error':error})
+
+
+def feedback_manager(request):
+    error=''
+    feedbacks = Feedback.objects.all().order_by('-created_at')
+
+    if request.method=='POST':
+        action = request.POST.get('action')
+
+        if action == 'submit':
+            name = request.POST.get('name')
+            message=request.POST.get('message')
+
+            if not name or not message:
+                error = "Enter both fields first"
+            else:
+                Feedback.objects.create(name=name, message=message)
+        elif action == 'clear':
+            Feedback.objects.all().delete()
+
+        return redirect('feedback')
+    context={
+        'error':error,
+        'feedbacks':feedbacks
+    }
+    return render(request, 'product/feedback_manager.html',context)
