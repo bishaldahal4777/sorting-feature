@@ -1,0 +1,12 @@
+<h1>fill out the form to contact me</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Enter name">
+    <input type="textarea" name="message" placeholder="message....">
+</form>
+
+{% if error %}
+<p style="color:red">{{error}}</p>
+
+{% elif name and message %} 
+<p>Thank you , {{name}}! <br> your message to us is {{message}}</p>
