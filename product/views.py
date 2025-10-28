@@ -23,3 +23,9 @@ def form_view(request):
 def search_view(request):
     query = request.GET.get('q')
     return render(request, 'product/search.html',{'query': query})
+
+def feedback_view(request):
+    feedback_text = ''
+    if request.method == 'POST':
+        feedback_text = request.POST.get('feedback')
+    return render(request, 'feedback.html',{'feedback':feedback_text})
