@@ -19,3 +19,7 @@ def form_view(request):
     if request.method == 'POST':
         name = request.POST.get('username')
     return render(request, 'product/form.html', {'name':name})
+
+def search_view(request):
+    query = request.GET.get('q')
+    return render(request, 'product/search.html',{'query': query})
