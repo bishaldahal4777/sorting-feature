@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product, Feedback
+from .models import Product, Feedback, Practice
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 
@@ -79,3 +79,34 @@ def feedback_manager(request):
 
    
     return render(request, 'product/feedback_manager.html',{'error':error})
+
+def practice_view(request):
+    practices= Practice.objects.all().order_by('-created_at')
+
+    if request.method == 'POST':
+        name = request.POST.get('name','').strip()
+        email = request.POST.get('email','').strip()
+        message = request.POST.get('message', '').strip()
+
+        has_error = False
+        if not name:
+            message.error(request, 'Enter Name')
+            has_error = True
+        if not email:
+            message.error(request, 'Enter Email')
+            has_error = True
+        elif '@' not in email:
+            message.error(request, ' Email must have '@' ' )
+            has_error = True 
+        if not message:
+            message.error(request, 'Enter message')
+            has_error = True
+        elif len(message<10):
+            message.error(request,'message must be greater than 10')
+            has_error = True
+        
+        if not has_error:
+            Practice.objects.create(name=name, email=email, message=message)
+            message.success(request, 'Form filled success')
+            return redirect('practice')
+    return render(request, 'product/practice.html', {'practices':practices})
