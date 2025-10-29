@@ -113,7 +113,7 @@ def practice_view(request):
             return redirect('practice')
     return render(request, 'product/practice.html', {'practices':practices})
 
-def contact_list_view(request):
+def practice_list_view(request):
     query = request.GET.get('q', '').strip()
     practices = Practice.objects.all().order_by('-created_at')
 
