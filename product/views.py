@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Feedback, Practice
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
@@ -145,3 +145,31 @@ def practice_list_view(request):
     context = {'practices':practices,
                    'query':query}
     return render(request, 'product/practice_list.html', context)
+
+
+def practice_edit(request):
+    practice= get_object_or_404(Practice, id=id)
+
+    if request.method == 'POST':
+        name = request.POST.get('name','').strip()
+        email = request.POST.get('email','').strip()
+        message = request.POST.get('message', '').strip()
+
+        if not name or not email or not message:
+            messages.error(request, "fill out all the fields")
+        else:
+            practice.name = name
+            practice.email = email
+            practice.message = message
+            practice.save()
+            messages.success(request, 'Success')
+
+            return redirect('practice')
+    return render(request, 'product/practice_edit.html', {'practice':practice})
+
+
+def practice_delete(request, id):
+    practice = get_object_or_404(Practice, id=id)
+    practice.delete()
+    messages.success(request, 'Practice deleted successfully!')
+    return redirect('practice')

@@ -12,7 +12,8 @@ urlpatterns = [
     path('feedback/', views.feedback_manager, name= 'feedback'),
     path('practice/', views.practice_view, name= 'practice'),
     path('practice_list/', views.practice_list_view, name= 'practice_list'),
-
+    path('practice/', views.practice_view, name= 'practice'),
+    path('practice/edit/<int:id>', views.practice_edit, name= 'practice_edit'),
 
 
 

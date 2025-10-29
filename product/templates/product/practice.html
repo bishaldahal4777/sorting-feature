@@ -33,6 +33,18 @@
         {% for practice in page_obj %}
         <li><strong>{{practice.name}}</strong>{{practice.email}} - {{practice.message}}</li>
         <small>{{practice.created_at}}</small>
+        {% for p in page_obj %}
+  <li>
+    <strong>{{ p.name }}</strong> — {{ p.email }} — {{ p.message }}
+    <br>
+    <a href="{% url 'practice_edit' p.id %}" class="btn btn-warning btn-sm">Edit</a>
+    <a href="{% url 'practice_delete' p.id %}" class="btn btn-danger btn-sm"
+       onclick="return confirm('Are you sure you want to delete this?');">
+       Delete
+    </a>
+  </li>
+{% endfor %}
+
         {% endfor %}
     </ul>
     <!-- Pagination Controls -->
