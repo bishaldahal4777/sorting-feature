@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Product, Feedback, Practice
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.db.models import Q
 
 
@@ -59,6 +60,12 @@ def feedback_manager(request):
     error=''
     feedbacks = Feedback.objects.all().order_by('-created_at')
 
+     # Pagination part
+    paginator = Paginator(feedbacks, 5)  # show 5 feedbacks per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+
     if request.method=='POST':
         action = request.POST.get('action')
 
@@ -85,6 +92,7 @@ def feedback_manager(request):
 def practice_view(request):
     practices= Practice.objects.all().order_by('-created_at')
 
+   
     if request.method == 'POST':
         name = request.POST.get('name','').strip()
         email = request.POST.get('email','').strip()
@@ -121,6 +129,6 @@ def practice_list_view(request):
         practices = practices.filter(
             Q(name__icontains=query) | Q(email__icontains = query)
         )
-        context = {'practices':practices,
+    context = {'practices':practices,
                    'query':query}
     return render(request, 'product/practice_list.html', context)

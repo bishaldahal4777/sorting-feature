@@ -1,11 +1,12 @@
 <h3>search practice list </h3>
 
 <form action="" method="get">
-    <input type="text" name='q' value={{query}} placeholder="search by name or email">
+    <input type="text" name='q' value={{query}}>
 <button type="submit">Search</button>
 </form>
 
 <hr>
+<h1>Lists</h1>
 {% if practices %}
 <ul>
     {% for f in practices %}

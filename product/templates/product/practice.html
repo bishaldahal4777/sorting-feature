@@ -22,10 +22,12 @@
         <small>{{practice.created_at}}</small>
         {% endfor %}
     </ul>
+    
 
     {% else %}
     <p>No Feedback</p>
 
     {%endif%}
 <h3>search list </h3>
-<a href="{% url 'practice_list '%}"></a>
+<a href="{% url 'practice_list'%}">search list from here
+</a>
