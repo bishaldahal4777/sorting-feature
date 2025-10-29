@@ -21,29 +21,12 @@
     <hr>
     <h3>All Forms are</h3>
     {% if page_obj %}
- <ul>
-    {% for practice in page_obj %}
-        <li>
-            <strong>
-                {% if query %}
-                    {{ practice.name|replace:query:"<mark>"|add:query|add:"</mark>"|safe }}
-                {% else %}
-                    {{ practice.name }}
-                {% endif %}
-            </strong> - 
-            
-            {% if query %}
-                {{ practice.email|replace:query:"<mark>"|add:query|add:"</mark>"|safe }}
-            {% else %}
-                {{ practice.email }}
-            {% endif %}
-            <br>
-            {{ practice.message }}<br>
-            <small>{{ practice.created_at }}</small>
-        </li>
-    {% endfor %}
-</ul>
-
+    <ul>
+        {% for practice in page_obj %}
+        <li><strong>{{practice.name}}</strong>{{practice.email}} - {{practice.message}}</li>
+        <small>{{practice.created_at}}</small>
+        {% endfor %}
+    </ul>
     <!-- Pagination Controls -->
   <div>
     {% if page_obj.has_previous %}
