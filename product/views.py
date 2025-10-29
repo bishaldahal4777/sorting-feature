@@ -90,23 +90,23 @@ def practice_view(request):
 
         has_error = False
         if not name:
-            message.error(request, 'Enter Name')
+            messages.error(request, 'Enter Name')
             has_error = True
         if not email:
-            message.error(request, 'Enter Email')
+            messages.error(request, 'Enter Email')
             has_error = True
         elif '@' not in email:
-            message.error(request, ' Email must have '@' ' )
+            messages.error(request, ' Email must have '@' ' )
             has_error = True 
         if not message:
-            message.error(request, 'Enter message')
+            messages.error(request, 'Enter message')
             has_error = True
-        elif len(message<10):
-            message.error(request,'message must be greater than 10')
+        elif len(message) < 10:
+            messages.error(request,'message must be greater than 10')
             has_error = True
         
         if not has_error:
             Practice.objects.create(name=name, email=email, message=message)
-            message.success(request, 'Form filled success')
+            messages.success(request, 'Form filled success')
             return redirect('practice')
     return render(request, 'product/practice.html', {'practices':practices})

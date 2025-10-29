@@ -1,12 +1,17 @@
-<h2>Practice form</h2>
 
+<h2>Practice form</h2>
+{% if messages %}
+{% for message in messages %}
+{{message}}
+{% endfor %}
+{% endif %}
 <form action="" method="post">
     {% csrf_token %}
     <input type="text" name= "name" placeholder = "Enter Full Name">
     <input type="email" name="email" placeholder="Enter Email">
     <Textarea name="message" placeholder="Enter message"></Textarea>
     <button type="submit">Send</button>
-
+</form>
 
     <hr>
     <h3>All Forms are</h3>
@@ -15,10 +20,10 @@
         {% for practice in practices %}
         <li><strong>{{practice.name}}</strong>{{practice.email}} - {{practice.message}}</li>
         <small>{{practice.created_at}}</small>
+        {% endfor %}
     </ul>
 
     {% else %}
     <p>No Feedback</p>
 
     {%endif%}
-</form>
