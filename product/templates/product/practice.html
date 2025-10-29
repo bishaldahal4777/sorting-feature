@@ -13,16 +13,32 @@
     <button type="submit">Send</button>
 </form>
 
+<form action="" method="get">
+
+    <input type="text" name="search" id="" placeholder="Search " value={{query}}>
+    <button type="submit">Search</button>
+</form>
     <hr>
     <h3>All Forms are</h3>
-    {% if practices %}
+    {% if page_obj %}
     <ul>
-        {% for practice in practices %}
+        {% for practice in page_obj %}
         <li><strong>{{practice.name}}</strong>{{practice.email}} - {{practice.message}}</li>
         <small>{{practice.created_at}}</small>
         {% endfor %}
     </ul>
-    
+    <!-- Pagination Controls -->
+  <div>
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    {% endif %}
+  </div>
 
     {% else %}
     <p>No Feedback</p>

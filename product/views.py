@@ -60,12 +60,6 @@ def feedback_manager(request):
     error=''
     feedbacks = Feedback.objects.all().order_by('-created_at')
 
-     # Pagination part
-    paginator = Paginator(feedbacks, 5)  # show 5 feedbacks per page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-
     if request.method=='POST':
         action = request.POST.get('action')
 
@@ -92,7 +86,14 @@ def feedback_manager(request):
 def practice_view(request):
     practices= Practice.objects.all().order_by('-created_at')
 
-   
+    query = request.GET.get('search','').strip()
+    if query:
+        practices = practices.filter( Q(name__icontains = query) | Q(email__icontains=query))
+    # Pagination part
+    paginator = Paginator(practices, 5)  # show 5 feedbacks per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     if request.method == 'POST':
         name = request.POST.get('name','').strip()
         email = request.POST.get('email','').strip()
@@ -119,7 +120,7 @@ def practice_view(request):
             Practice.objects.create(name=name, email=email, message=message)
             messages.success(request, 'Form filled success')
             return redirect('practice')
-    return render(request, 'product/practice.html', {'practices':practices})
+    return render(request, 'product/practice.html', {'practices':practices,'page_obj':page_obj})
 
 def practice_list_view(request):
     query = request.GET.get('q', '').strip()
