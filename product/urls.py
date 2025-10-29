@@ -14,6 +14,9 @@ urlpatterns = [
     path('practice_list/', views.practice_list_view, name= 'practice_list'),
     path('practice/', views.practice_view, name= 'practice'),
     path('practice/edit/<int:id>', views.practice_edit, name= 'practice_edit'),
+    path('practice/delete/<int:id>', views.practice_delete, name= 'practice_delete'),
+
+
 
 
 
