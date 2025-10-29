@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Product, Feedback, Practice
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
+from django.db.models import Q
+
 
 def product(request):
     context = {'title': 'Home Page', 'username':'Bishal dahal', 'developer': 'Bishal Dev', 'skills':['python', 'git', 'sql']}
@@ -110,3 +112,15 @@ def practice_view(request):
             messages.success(request, 'Form filled success')
             return redirect('practice')
     return render(request, 'product/practice.html', {'practices':practices})
+
+def contact_list_view(request):
+    query = request.GET.get('q', '').strip()
+    practices = Practice.objects.all().order_by('-created_at')
+
+    if query:
+        practices = practices.filter(
+            Q(name__icontains=query) | Q(email__icontains = query)
+        )
+        context = {'practices':practices,
+                   'query':query}
+    return render(request, 'product/practice_list.html', context)
