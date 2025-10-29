@@ -89,6 +89,18 @@ def practice_view(request):
     query = request.GET.get('search','').strip()
     if query:
         practices = practices.filter( Q(name__icontains = query) | Q(email__icontains=query))
+
+    # --- Sorting ---
+    sort_by = request.GET.get('sort', 'newest')  # default sorting
+    if sort_by == 'newest':
+        practices = practices.order_by('-created_at')
+    elif sort_by == 'oldest':
+        practices = practices.order_by('created_at')
+    elif sort_by == 'name_asc':
+        practices = practices.order_by('name')
+    elif sort_by == 'name_desc':
+        practices = practices.order_by('-name')
+
     # Pagination part
     paginator = Paginator(practices, 5)  # show 5 feedbacks per page
     page_number = request.GET.get('page')
@@ -120,7 +132,7 @@ def practice_view(request):
             Practice.objects.create(name=name, email=email, message=message)
             messages.success(request, 'Form filled success')
             return redirect('practice')
-    return render(request, 'product/practice.html', {'practices':practices,'page_obj':page_obj})
+    return render(request, 'product/practice.html', {'practices':practices,'page_obj':page_obj, 'sort_by':sort_by})
 
 def practice_list_view(request):
     query = request.GET.get('q', '').strip()

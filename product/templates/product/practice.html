@@ -13,11 +13,19 @@
     <button type="submit">Send</button>
 </form>
 
-<form action="" method="get">
+<form method="GET" style="margin-bottom: 10px;">
+    <input type="text" name="search" placeholder="Search..." value="{{ query }}">
+    
+    <select name="sort">
+        <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest</option>
+        <option value="oldest" {% if sort_by == 'oldest' %}selected{% endif %}>Oldest</option>
+        <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name A-Z</option>
+        <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name Z-A</option>
+    </select>
 
-    <input type="text" name="search" id="" placeholder="Search " value={{query}}>
-    <button type="submit">Search</button>
+    <button type="submit">Search / Sort</button>
 </form>
+
     <hr>
     <h3>All Forms are</h3>
     {% if page_obj %}
